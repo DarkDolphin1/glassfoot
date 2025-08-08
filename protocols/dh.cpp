@@ -1,8 +1,25 @@
 #include"dh.hpp"
 #include<gmp.h>
 #include<gmpxx.h>
+#include<fstream>
 
 #pragma once
+
+unsigned long long strong_seed() {
+    unsigned long s;
+    std::ifstream urandom("/dev/urandom", std::ios::binary);
+    urandom.read(reinterpret_cast<char*>(&s), sizeof(s));
+    return s;
+}
+
+mpz_class generateKeyRandom(unsigned int bits = 256){
+    gmp_randclass rr(gmp_randinit_default);
+    
+    unsigned long long seed = strong_seed();
+    
+    rr.seed(seed);
+    return rr.get_z_bits(bits);
+}
 
 class DH {
     public:

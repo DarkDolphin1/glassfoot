@@ -13,3 +13,5 @@ struct Keys{
     mpz_class SharedKey = -1;
 };
 
+mpz_class generateKeyRandom(unsigned int);
+unsigned long long strong_seed();

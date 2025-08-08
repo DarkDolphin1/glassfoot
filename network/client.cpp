@@ -3,7 +3,7 @@
 
 #pragma once
 
-void client(const DH &dh , Keys &key){
+void client(const DH &dh , Keys &key,bool write){
     if(verify()){
         // generate public keys and send it to server
         key.B_PublicKey = dh.generatePublicKey(key.b_PrivateKey);
@@ -16,7 +16,7 @@ void client(const DH &dh , Keys &key){
 
         key.SharedKey = dh.computeSharedKey(key.A_PublicKey,key.b_PrivateKey);
 
-        writeFile(key.SharedKey);
+        if(write) writeFile(key.SharedKey);
     }else{
         std::cout<<"Verification failed";
     }

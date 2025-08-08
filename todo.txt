@@ -1,0 +1,26 @@
+write Small programs that do one thing very well
+
+// ✅ Phase 1: Clean + Polish Core Logic (before adding real networking)
+
+[ ] ✅ Generate random private keys
+    - Use `gmp_randstate_t` + `mpz_urandomb()`
+    - Replace hardcoded values
+
+[ ] ✅ Add input validation
+    - Check return values of `set_str()`
+    - Handle invalid or malformed input cleanly
+
+[ ] ✅ Improve console output (debug mode)
+    - Add optional verbose/debug flag
+    - Print "PrivateKey: XYZ", "PublicKey: ABC" only in debug
+    - Use consistent labels for terminal readability
+
+[ ] ✅ Create `app.hpp` and `app.cpp`
+    - Move orchestration logic from `main.cpp` into `run_app()`
+    - Reduce clutter in `main.cpp` to just 3-5 lines
+
+[ ] Optional: Add a `--help` or `--debug` CLI flag for easy control
+
+// 🛣️ When all above is done, begin Phase 2
+
+

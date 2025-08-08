@@ -4,7 +4,6 @@
 #pragma once
 
 void client(const DH &dh , Keys &key){
-    std::cout<<"Inside Client function"<<std::endl;
     if(verify()){
         // generate public keys and send it to server
         key.B_PublicKey = dh.generatePublicKey(key.b_PrivateKey);

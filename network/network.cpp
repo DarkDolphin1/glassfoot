@@ -15,6 +15,7 @@ void writeFile (const mpz_class &sharedKey){
         std::cerr<<"[ERROR] Failed to open file for writing"<<std::endl;
     }
 }
+
 inline bool verify(){
     std::string temp;
     std::getline(std::cin,temp);

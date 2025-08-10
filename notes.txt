@@ -1,0 +1,27 @@
+behaviour for SEND and READ
+
+while sending a key , the sender follows the following format 
+SEND.(base):(key)
+
+as an example , 
+    SEND.HEX:0123456789abcdef
+or  SEND.DEC:0123456789123456
+
+as a reader , you should always assume that encountring a SEND means read.
+before you read the key , before the key is even printed , you should send a request using READ
+
+for sender :
+    use SEND when sending the key , only after encountring READ 
+
+for receiver :
+    use READ when requesting the key , and wait for SEND
+
+void wait(target) => waits for an incoming message
+void ask(base) => asks the other side to send their PublicKey in given base
+
+void transfer(keys , base , op) => prints the PublicKey in given base
+example :  SEND.HEX:0123456789abcdef
+
+void readKey(&key) => reads the key from stdin , formats it and stores it in key.B_PublicKey
+
+void notify(bool success) => informs the sender that key was received successfully or not

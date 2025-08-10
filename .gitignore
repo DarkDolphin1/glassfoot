@@ -8,7 +8,7 @@
 *.app
 *.hex
 *.a
-*.txt
+todo.txt
 *.key
 *.pem
 *.der

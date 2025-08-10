@@ -8,33 +8,40 @@
 void server(const DH &dh , Keys &key , bool write){
     notify();
     std::cout<<std::flush;
-
     key.a_PrivateKey = generateKeyRandom();
-
-    //get client's (Bob's) Public keys
     std::string bPublicKeyString;
-    std::getline(std::cin,bPublicKeyString);
+    const auto Base = BASE::HEX;
 
-    if(key.B_PublicKey.set_str(bPublicKeyString,16) != 0){
-        std::cerr<<"error parsing the string from client"<<std::flush;
-        exit(1);
+    // send request to get client's (Bob's) Public keys
+    askKey(Base);
+
+    std::string str;
+    auto strPtr = &str;
+    std::getline(std::cin,str);
+    if(wait(std::string("SEND"),strPtr)){
+        readKey(key.B_PublicKey,strPtr);
     }
 
-    key.B_PublicKey.set_str(bPublicKeyString,16); // NOTE : switiching everything to base 16 for consistancy
-
+    // notify(true);    // skipping this for now as i haven't finished with error checking approach
+    str = "";
     //generate and send server's (Alice's) public keys
     if(key.a_PrivateKey == -1){
         exit(1);
     }
 
+    // time to send our public keys
     key.A_PublicKey = dh.generatePublicKey(key.a_PrivateKey);
-    std::cout<<std::flush<<key.A_PublicKey.get_str(16)<<std::endl;
+    std::getline(std::cin,str);
+    if(wait(std::string("RECV"),strPtr)){
+        log(constructMessage(key,BASE::HEX,OPR::SEND));
+    }
 
     //compute shared key
     key.SharedKey = dh.computeSharedKey(key.B_PublicKey,key.a_PrivateKey);
 
     if(write) writeFile(key.SharedKey);
 }
+
 inline void notify(){
     std::cout<<"server-side"<<std::endl;
 }
